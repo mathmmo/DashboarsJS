@@ -1,0 +1,50 @@
+{
+    "success": true,
+    "error": 0,
+    "data": [
+        {
+            "plate": "ABC1234",
+            "deviceId": 1234,
+            "positionId": 1426,
+            "date": "2018-09-27 11:15:12",
+            "ignition": "OFF",
+            "odometer": "61783255",
+            "horimeter": "085120",
+            "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+            "direction": "000.00",
+            "speed": "0",
+            "mainBattery": "13.10",
+            "latitude": "-22.847178",
+            "longitude": "-47.08351",
+            "driverName": "",
+            "driverId": "",
+            "input1": "0",
+            "input2": "0",
+            "output1": "0",
+            "output2": "0",
+            "rs232": ""
+        },
+        {
+            "plate": "ABC1234",
+            "deviceId": 123456,
+            "positionId": 1425,
+            "date": "2018-09-27 10:15:12",
+            "ignition": "OFF",
+            "odometer": "61783255",
+            "horimeter": "085120",
+            "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+            "direction": "000.00",
+            "speed": "0",
+            "mainBattery": "13.13",
+            "latitude": "-22.847169",
+            "longitude": "-47.083507",
+            "driverName": "",
+            "driverId": "",
+            "input1": "0",
+            "input2": "0",
+            "output1": "0",
+            "output2": "0",
+​            "rs232": ""
+        }
+    ]
+}
