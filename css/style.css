@@ -8,6 +8,10 @@
  *   version 2.3
  *
 */
+#map {
+    height: 480px;
+    margin-bottom: 16px;
+} 
 
 .graph2 {
     display: none !important;

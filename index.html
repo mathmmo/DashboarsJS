@@ -3,16 +3,67 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INSPINIA | Dashboard v.2</title>
+    <title>Gestão de Frota | Dashboard</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 </head>
     <body>
         <div id="wrapper">
             <div id="page-wrapper" class="gray-bg">
                 <div class="wrapper wrapper-content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="ibox">
+                                <div class="ibox-title">
+                                    <h5>Localização</h5>
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="row">
+                                    <div class="col-lg-12">
+                                        <div id="map"></div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div id="listContainer">
+                                            <ul class="stat-list">
+                                                <li>
+                                                    <h2 class="no-margins" id="deviceId"><i class="fa fa-mobile text-navy"></i></h2>
+                                                    <small>ID Dispositivo</small>
+                                                    <div class="progress progress-mini">
+                                                        <div style="width: 100%;" class="progress-bar"></div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <h2 class="no-margins" id="mainBattery1"></h2>
+                                                    <small>Bateria Principal</small>
+                                                    <div class="stat-percent" id="mainBattery2"><i class="fa fa-bolt text-navy"></i></div>
+                                                    <div class="progress progress-mini">
+                                                        <div class="progress-bar" id="mainBattery3"></div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <h2 class="no-margins"  id="backupBattery1"></h2>
+                                                    <small>Bateria Reserva</small>
+                                                    <div class="stat-percent" id="backupBattery2">'+element.backupBattery+'% <i class="fa fa-bolt text-navy"></i></div>
+                                                    <div class="progress progress-mini">
+                                                        <div id="backupBattery3" class="progress-bar"></div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <h2 class="no-margins" id="lastPosDate"></h2>
+                                                    <small>Data e Hora da Medição</small>
+                                                    <div class="stat-percent"><i class="fa fa-clock-o text-navy"></i></div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-lg-3">
                             <div class="ibox pointer" onclick="searchPos('AAA1234')" >
@@ -71,57 +122,6 @@
                                     <h1 class="no-margins">6189843</h1>
                                     <div class="stat-percent font-bold text-success">ON <i class="fa fa-power-off"></i></div>
                                     <small>Odometro</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="ibox">
-                                <div class="ibox-title">
-                                    <h5>Ultima Posição</h5>
-                                </div>
-                                <div class="ibox-content">
-                                    <div class="row">
-                                    <div class="col-lg-9">
-                                        <div class="flot-chart" id="flot-chart">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-3">
-                                        <div id="listContainer">
-                                            <ul class="stat-list">
-                                                <li>
-                                                    <h2 class="no-margins" id="deviceId"><i class="fa fa-mobile text-navy"></i></h2>
-                                                    <small>ID Dispositivo</small>
-                                                    <div class="progress progress-mini">
-                                                        <div style="width: 100%;" class="progress-bar"></div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <h2 class="no-margins" id="mainBattery1"></h2>
-                                                    <small>Bateria Principal</small>
-                                                    <div class="stat-percent" id="mainBattery2"><i class="fa fa-bolt text-navy"></i></div>
-                                                    <div class="progress progress-mini">
-                                                        <div class="progress-bar" id="mainBattery3"></div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <h2 class="no-margins"  id="backupBattery1"></h2>
-                                                    <small>Bateria Reserva</small>
-                                                    <div class="stat-percent" id="backupBattery2">'+element.backupBattery+'% <i class="fa fa-bolt text-navy"></i></div>
-                                                    <div class="progress progress-mini">
-                                                        <div id="backupBattery3" class="progress-bar"></div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <h2 class="no-margins" id="lastPosDate"></h2>
-                                                    <small>Data e Hora da Medição</small>
-                                                    <div class="stat-percent"><i class="fa fa-clock-o text-navy"></i></div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
                                 </div>
                             </div>
                         </div>
@@ -291,6 +291,47 @@
         <script src="js/plugins/sparkline/jquery.sparkline.min.js"></script>
         <!-- Sparkline demo data  -->
         <script src="js/demo/sparkline-demo.js"></script>
+        <script>
+            "use strict";
+      
+            let map;
+      
+            function initMap() {
+                //New map
+                map = new google.maps.Map(document.getElementById("map"), {
+                    center: {
+                        lat: -22.845837,
+                        lng: -47.083258
+                    },
+                    zoom: 15
+                });
+                //Multiple Markers
+                //function addMarkers()
+                function mapping(client){
+                    var obj = client == 'Cliente1' ? vehicleLastPos2 : vehicleLastPos;
+                    obj.data.forEach(element => {
+                        var marker = new google.maps.Marker({
+                            position: {
+                                lat: parseFloat(element.latitude) ,
+                                lng: parseFloat(element.longitude)
+                            },
+                            map: map, 
+                            icon: element.ignition == 'ON' ? './src/assets/bulldozerONmin.png' : './src/assets/bulldozerOFFmin.png'
+                        });
+                        var InfoWindow = new google.maps.InfoWindow({
+                            content: 'PLACA : ' + element.plate,
+                        });
+                        marker.addListener('click', function(){
+                            InfoWindow.open(map,marker)
+                        });
+                    });
+                }
+                mapping();
+            }
+        </script>
+        <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACSjChAW7YLx-GADVD4LurwWhVM0B1cG8&callback=initMap&libraries=&v=weekly"
+        ></script>
         <!-- DEMO DATA -->
         <script>
             //JSON DATA
@@ -306,7 +347,7 @@
                         "positionId": 16145844,
                         "date": "2018-01-05 14:25:27",
                         "systemDate": "2018-09-26 14:35:15",
-                        "ignition": "OFF",
+                        "ignition": "ON",
                         "speed": "0",
                         "output1": "OFF",
                         "output2": "OFF",
@@ -333,7 +374,7 @@
                         "positionId": 16145844,
                         "date": "2018-09-26 11:19:27",
                         "systemDate": "2018-10-15 11:20:01",
-                        "ignition": "OFF",
+                        "ignition": "ON",
                         "speed": "0",
                         "output1": "OFF",
                         "output2": "OFF",
@@ -382,6 +423,768 @@
                     },
                     {
                         "vehicleId": 4,
+                        "plate": "FFF0001",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "ON",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.845237",
+                        "longitude": "-47.088258",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 5,
+                        "plate": "FFF0041",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "OFF",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.845837",
+                        "longitude": "-47.089258",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 6,
+                        "plate": "ASD1665",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "ON",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.847237",
+                        "longitude": "-47.089000",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 7,
+                        "plate": "ASD5451",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "ON",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.846000",
+                        "longitude": "-47.088548",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 8,
+                        "plate": "WHD1565",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "OFF",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.846197",
+                        "longitude": "-47.089958",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 9,
+                        "plate": "HRF5416",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "ON",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.846165",
+                        "longitude": "-47.089198",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 10,
+                        "plate": "GJE5065",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "ON",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.846156",
+                        "longitude": "-47.089615",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 11,
+                        "plate": "KFP0532",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "ON",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.847237",
+                        "longitude": "-47.088758",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 12,
+                        "plate": "KEL8106",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "OFF",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.846537",
+                        "longitude": "-47.089008",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 13,
+                        "plate": "OLA1234",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "ON",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.844137",
+                        "longitude": "-47.089958",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 14,
+                        "plate": "KDK5155",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "OFF",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.847837",
+                        "longitude": "-47.080258",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 15,
+                        "plate": "ODO1565",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "OFF",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.852237",
+                        "longitude": "-47.085258",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 16,
+                        "plate": "KJV6165",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "ON",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.841837",
+                        "longitude": "-47.088258",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    }
+                ]
+            }
+            var vehicleLastPos2 = {
+                "success": true,
+                "error": 0,
+                "data": [
+                    {
+                        "vehicleId": 1,
+                        "plate": "AAA1234",
+                        "label": "Carro da Frota A",
+                        "positionId": 16145844,
+                        "date": "2018-01-05 14:25:27",
+                        "systemDate": "2018-09-26 14:35:15",
+                        "ignition": "OFF",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.846837",
+                        "longitude": "-47.083258",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 123456,
+                        "mainBattery": "13.10",
+                        "backupBattery": "90.25",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "61747659",
+                        "horimeter": "085059",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 2,
+                        "plate": "BBB1234",
+                        "label": "Carro da Frota A",
+                        "positionId": 16145844,
+                        "date": "2018-09-26 11:19:27",
+                        "systemDate": "2018-10-15 11:20:01",
+                        "ignition": "OFF",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.831837",
+                        "longitude": "-47.023258",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 654321,
+                        "mainBattery": "18.50",
+                        "backupBattery": "40.10",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "12548965",
+                        "horimeter": "025019",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 3,
+                        "plate": "DDD1234",
+                        "label": "Carro da Frota B",
+                        "positionId": 16145843,
+                        "date": "2018-09-29 08:30:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "OFF",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.546837",
+                        "longitude": "-47.983258",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 456789,
+                        "mainBattery": "53.90",
+                        "backupBattery": "100.00",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "985135",
+                        "horimeter": "008651",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 4,
+                        "plate": "FFF1234",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "OFF",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.846237",
+                        "longitude": "-47.089258",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 5,
+                        "plate": "FFF1234",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "OFF",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.846237",
+                        "longitude": "-47.089258",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 6,
+                        "plate": "FFF1234",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "OFF",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.846237",
+                        "longitude": "-47.089258",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 7,
+                        "plate": "FFF1234",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "OFF",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.846237",
+                        "longitude": "-47.089258",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 8,
+                        "plate": "FFF1234",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "OFF",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.846237",
+                        "longitude": "-47.089258",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 9,
+                        "plate": "FFF1234",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "OFF",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.846237",
+                        "longitude": "-47.089258",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 10,
+                        "plate": "FFF1234",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "OFF",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.846237",
+                        "longitude": "-47.089258",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 11,
+                        "plate": "FFF1234",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "OFF",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.846237",
+                        "longitude": "-47.089258",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 12,
+                        "plate": "FFF1234",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "OFF",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.846237",
+                        "longitude": "-47.089258",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 13,
+                        "plate": "FFF1234",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "OFF",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.846237",
+                        "longitude": "-47.089258",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 14,
+                        "plate": "FFF1234",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "OFF",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.846237",
+                        "longitude": "-47.089258",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 15,
+                        "plate": "FFF1234",
+                        "label": "Carro da Frota C",
+                        "positionId": 16145842,
+                        "date": "2018-09-26 22:15:27",
+                        "systemDate": "2018-09-26 11:20:01",
+                        "ignition": "OFF",
+                        "speed": "0",
+                        "output1": "OFF",
+                        "output2": "OFF",
+                        "latitude": "-22.846237",
+                        "longitude": "-47.089258",
+                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
+                        "deviceId": 987654,
+                        "mainBattery": "00.00",
+                        "backupBattery": "80.50",
+                        "driverId": "1F00CA1221AA31",
+                        "vehicleType": 5,
+                        "odometer": "6189843",
+                        "horimeter": "045316",
+                        "rpm": "1000",
+                        "temp1": "30",
+                        "temp2": "22",
+                        "temp3": "14",
+                        "direction": "000.00"
+                    },
+                    {
+                        "vehicleId": 16,
                         "plate": "FFF1234",
                         "label": "Carro da Frota C",
                         "positionId": 16145842,
@@ -909,20 +1712,6 @@
                         $('#backupBattery2').html(element.backupBattery+'%<i class="fa fa-bolt text-navy"></i>')
                         $("#backupBattery3").css('width',element.backupBattery + '%');
                         $("#lastPosDate").html(element.date.substr(0,10).split('-').reverse().join('/') + ' ' + element.date.substr(10,6));
-                        $("#googleMap").remove();
-                        $("#flot-chart").append(
-                            '<iframe '+
-                            '    id="googleMap"'+
-                            '    width="100%" '+
-                            '    height="250" '+
-                            '    frameborder="0" '+
-                            '    scrolling="no" '+
-                            '    marginheight="0" '+
-                            '    marginwidth="0" '+
-                            '    src="https://maps.google.com/maps?q='+element.latitude+','+element.longitude+'&hl=pt-br&z=14&amp;output=embed"'+
-                            '>'+
-                            '</iframe>'
-                        );
                     }
                 });
             }
