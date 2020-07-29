@@ -18,110 +18,35 @@
                         <div class="col-lg-12">
                             <div class="ibox">
                                 <div class="ibox-title">
-                                    <h5>Localização</h5>
-                                </div>
-                                <div class="ibox-content">
-                                    <div class="row">
-                                    <div class="col-lg-12">
-                                        <div id="map"></div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div id="listContainer">
-                                            <ul class="stat-list">
-                                                <li>
-                                                    <h2 class="no-margins" id="deviceId"><i class="fa fa-mobile text-navy"></i></h2>
-                                                    <small>ID Dispositivo</small>
-                                                    <div class="progress progress-mini">
-                                                        <div style="width: 100%;" class="progress-bar"></div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <h2 class="no-margins" id="mainBattery1"></h2>
-                                                    <small>Bateria Principal</small>
-                                                    <div class="stat-percent" id="mainBattery2"><i class="fa fa-bolt text-navy"></i></div>
-                                                    <div class="progress progress-mini">
-                                                        <div class="progress-bar" id="mainBattery3"></div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <h2 class="no-margins"  id="backupBattery1"></h2>
-                                                    <small>Bateria Reserva</small>
-                                                    <div class="stat-percent" id="backupBattery2">'+element.backupBattery+'% <i class="fa fa-bolt text-navy"></i></div>
-                                                    <div class="progress progress-mini">
-                                                        <div id="backupBattery3" class="progress-bar"></div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <h2 class="no-margins" id="lastPosDate"></h2>
-                                                    <small>Data e Hora da Medição</small>
-                                                    <div class="stat-percent"><i class="fa fa-clock-o text-navy"></i></div>
-                                                </li>
-                                            </ul>
+                                    <div class="ibox-tools">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <span class="label label-success float-right pesquisar-cliente">Pesquisar Cliente</span>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <select class="form-control m-b" id="client" onchange="initMap()">
+                                                    <option>Cliente1</option>
+                                                    <option>Cliente2</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-3">
-                            <div class="ibox pointer" onclick="searchPos('AAA1234')" >
+                        <div class="col-lg-12">
+                            <div class="ibox">
                                 <div class="ibox-title">
-                                    <div class="ibox-tools">
-                                        <span class="label label-success float-right">Frota A</span>
-                                    </div>
-                                    <h5 style="margin-left: 8px;">AAA-1234</h5>
+                                    <h5>Localização</h5>
                                 </div>
                                 <div class="ibox-content">
-                                    <h1 class="no-margins">61747659</h1>
-                                    <div class="stat-percent font-bold text-success">ON <i class="fa fa-power-off"></i></div>
-                                    <small>Odometro</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="ibox pointer" onclick="searchPos('BBB1234')" >
-                                <div class="ibox-title">
-                                    <div class="ibox-tools">
-                                        <span class="label label-success float-right">Frota A</span>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div id="map"></div>
+                                        </div>
                                     </div>
-                                    <h5 style="margin-left: 8px;">BBB-1234</h5>
-                                </div>
-                                <div class="ibox-content">
-                                    <h1 class="no-margins">12548965</h1>
-                                    <div class="stat-percent font-bold text-muted">OFF <i class="fa fa-power-off"></i></div>
-                                    <small>Odometro</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="ibox pointer" onclick="searchPos('DDD1234')" >
-                                <div class="ibox-title">
-                                    <div class="ibox-tools">
-                                        <span class="label label-warning float-right">Frota B</span>
-                                    </div>
-                                    <h5 style="margin-left: 8px;">DDD-1234</h5>
-                                </div>
-                                <div class="ibox-content">
-                                    <h1 class="no-margins">985135</h1>
-                                    <div class="stat-percent font-bold text-muted">OFF <i class="fa fa-power-off"></i></div>
-                                    <small>Odometro</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="ibox pointer" onclick="searchPos('FFF1234')" >
-                                <div class="ibox-title">
-                                    <div class="ibox-tools">
-                                        <span class="label label-info float-right">Frota C</span>
-                                    </div>
-                                    <h5 style="margin-left: 8px;">FFF-1234</h5>
-                                </div>
-                                <div class="ibox-content">
-                                    <h1 class="no-margins">6189843</h1>
-                                    <div class="stat-percent font-bold text-success">ON <i class="fa fa-power-off"></i></div>
-                                    <small>Odometro</small>
                                 </div>
                             </div>
                         </div>
@@ -192,26 +117,26 @@
                                 </div>
                                 <div class="ibox-content">
                                     <ul class="list-group clear-list m-t">
-                                        <li class="list-group-item fist-item pointer">
-                                            <span class="label label-success">AAA-1234</span> 
+                                        <li class="list-group-item fist-item pointer active">
+                                            <span class="label label-warning">ABC-1234</span> 
                                             <span class="float-right">
                                                 Total 085059
                                             </span>
                                         </li>
                                         <li class="list-group-item pointer">
-                                            <span class="label label-success plateLabel">BBB-1234</span>
+                                            <span class="label label-warning plateLabel">BBB-1234</span>
                                             <span class="float-right">
                                                 Total 025019
                                             </span>
                                         </li>
-                                        <li class="list-group-item active pointer">
+                                        <li class="list-group-item pointer">
                                             <span class="label label-warning plateLabel">DDD-1234</span>
                                             <span class="float-right">
                                                 Total 008651
                                             </span>
                                         </li>
-                                        <li class="list-group-item active pointer">
-                                            <span class="label label-info plateLabel">FFF-1234</span>
+                                        <li class="list-group-item pointer">
+                                            <span class="label label-warning plateLabel">FFF-1234</span>
                                             <span class="float-right">
                                                 Total 045316
                                             </span>
@@ -293,7 +218,6 @@
         <script src="js/demo/sparkline-demo.js"></script>
         <script>
             "use strict";
-      
             let map;
       
             function initMap() {
@@ -307,8 +231,8 @@
                 });
                 //Multiple Markers
                 //function addMarkers()
-                function mapping(client){
-                    var obj = client == 'Cliente1' ? vehicleLastPos2 : vehicleLastPos;
+                function mapping(){
+                    var obj = $('#client')[0].value == 'Cliente1' ? vehicleLastPos2 : vehicleLastPos;
                     obj.data.forEach(element => {
                         var marker = new google.maps.Marker({
                             position: {
@@ -319,10 +243,20 @@
                             icon: element.ignition == 'ON' ? './src/assets/bulldozerONmin.png' : './src/assets/bulldozerOFFmin.png'
                         });
                         var InfoWindow = new google.maps.InfoWindow({
-                            content: 'PLACA : ' + element.plate,
+                            content: 
+                                '<h5 style="padding-left: 18px; margin-bottom: 8px;">PLACA : ' + element.plate + '</h5>' +
+                                '<ul style="padding-left: 18px;">' +
+                                    '<li>' + element.label + '</li>' +
+                                    '<li>Ignição: ' + element.ignition + '</li>' +
+                                    '<li>Odometro: ' + element.odometer + '</li>' +
+                                    '<li>Horimetro: ' + element.horimeter + '</li>' +
+                                    '<li>Bateria 1: ' + element.mainBattery + '%</li>' +
+                                    '<li>Bateria 2: ' + element.backupBattery + '%</li>' +
+                                    '<li>Motorista: ' + element.driverId + '</li>' +
+                                '</ul>',
                         });
-                        marker.addListener('click', function(){
-                            InfoWindow.open(map,marker)
+                        marker.addListener('click', () => {
+                            InfoWindow.open(map,marker);
                         });
                     });
                 }
@@ -343,7 +277,7 @@
                     {
                         "vehicleId": 1,
                         "plate": "AAA1234",
-                        "label": "Carro da Frota A",
+                        "label": "Frota A",
                         "positionId": 16145844,
                         "date": "2018-01-05 14:25:27",
                         "systemDate": "2018-09-26 14:35:15",
@@ -370,7 +304,7 @@
                     {
                         "vehicleId": 2,
                         "plate": "BBB1234",
-                        "label": "Carro da Frota A",
+                        "label": "Frota A",
                         "positionId": 16145844,
                         "date": "2018-09-26 11:19:27",
                         "systemDate": "2018-10-15 11:20:01",
@@ -378,8 +312,8 @@
                         "speed": "0",
                         "output1": "OFF",
                         "output2": "OFF",
-                        "latitude": "-22.806837",
-                        "longitude": "-47.023258",
+                        "latitude": "-22.845437",
+                        "longitude": "-47.088758",
                         "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
                         "deviceId": 654321,
                         "mainBattery": "18.50",
@@ -397,7 +331,7 @@
                     {
                         "vehicleId": 3,
                         "plate": "DDD1234",
-                        "label": "Carro da Frota B",
+                        "label": "Frota B",
                         "positionId": 16145843,
                         "date": "2018-09-29 08:30:27",
                         "systemDate": "2018-09-26 11:20:01",
@@ -405,8 +339,8 @@
                         "speed": "0",
                         "output1": "OFF",
                         "output2": "OFF",
-                        "latitude": "-22.546837",
-                        "longitude": "-47.983258",
+                        "latitude": "-22.848937",
+                        "longitude": "-47.087758",
                         "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
                         "deviceId": 456789,
                         "mainBattery": "53.90",
@@ -424,7 +358,7 @@
                     {
                         "vehicleId": 4,
                         "plate": "FFF0001",
-                        "label": "Carro da Frota C",
+                        "label": "Frota C",
                         "positionId": 16145842,
                         "date": "2018-09-26 22:15:27",
                         "systemDate": "2018-09-26 11:20:01",
@@ -451,7 +385,7 @@
                     {
                         "vehicleId": 5,
                         "plate": "FFF0041",
-                        "label": "Carro da Frota C",
+                        "label": "Frota C",
                         "positionId": 16145842,
                         "date": "2018-09-26 22:15:27",
                         "systemDate": "2018-09-26 11:20:01",
@@ -478,7 +412,7 @@
                     {
                         "vehicleId": 6,
                         "plate": "ASD1665",
-                        "label": "Carro da Frota C",
+                        "label": "Frota C",
                         "positionId": 16145842,
                         "date": "2018-09-26 22:15:27",
                         "systemDate": "2018-09-26 11:20:01",
@@ -505,7 +439,7 @@
                     {
                         "vehicleId": 7,
                         "plate": "ASD5451",
-                        "label": "Carro da Frota C",
+                        "label": "Frota C",
                         "positionId": 16145842,
                         "date": "2018-09-26 22:15:27",
                         "systemDate": "2018-09-26 11:20:01",
@@ -532,7 +466,7 @@
                     {
                         "vehicleId": 8,
                         "plate": "WHD1565",
-                        "label": "Carro da Frota C",
+                        "label": "Frota C",
                         "positionId": 16145842,
                         "date": "2018-09-26 22:15:27",
                         "systemDate": "2018-09-26 11:20:01",
@@ -559,7 +493,7 @@
                     {
                         "vehicleId": 9,
                         "plate": "HRF5416",
-                        "label": "Carro da Frota C",
+                        "label": "Frota C",
                         "positionId": 16145842,
                         "date": "2018-09-26 22:15:27",
                         "systemDate": "2018-09-26 11:20:01",
@@ -586,7 +520,7 @@
                     {
                         "vehicleId": 10,
                         "plate": "GJE5065",
-                        "label": "Carro da Frota C",
+                        "label": "Frota C",
                         "positionId": 16145842,
                         "date": "2018-09-26 22:15:27",
                         "systemDate": "2018-09-26 11:20:01",
@@ -613,7 +547,7 @@
                     {
                         "vehicleId": 11,
                         "plate": "KFP0532",
-                        "label": "Carro da Frota C",
+                        "label": "Frota C",
                         "positionId": 16145842,
                         "date": "2018-09-26 22:15:27",
                         "systemDate": "2018-09-26 11:20:01",
@@ -640,7 +574,7 @@
                     {
                         "vehicleId": 12,
                         "plate": "KEL8106",
-                        "label": "Carro da Frota C",
+                        "label": "Frota C",
                         "positionId": 16145842,
                         "date": "2018-09-26 22:15:27",
                         "systemDate": "2018-09-26 11:20:01",
@@ -667,7 +601,7 @@
                     {
                         "vehicleId": 13,
                         "plate": "OLA1234",
-                        "label": "Carro da Frota C",
+                        "label": "Frota C",
                         "positionId": 16145842,
                         "date": "2018-09-26 22:15:27",
                         "systemDate": "2018-09-26 11:20:01",
@@ -694,7 +628,7 @@
                     {
                         "vehicleId": 14,
                         "plate": "KDK5155",
-                        "label": "Carro da Frota C",
+                        "label": "Frota C",
                         "positionId": 16145842,
                         "date": "2018-09-26 22:15:27",
                         "systemDate": "2018-09-26 11:20:01",
@@ -721,7 +655,7 @@
                     {
                         "vehicleId": 15,
                         "plate": "ODO1565",
-                        "label": "Carro da Frota C",
+                        "label": "Frota C",
                         "positionId": 16145842,
                         "date": "2018-09-26 22:15:27",
                         "systemDate": "2018-09-26 11:20:01",
@@ -748,7 +682,7 @@
                     {
                         "vehicleId": 16,
                         "plate": "KJV6165",
-                        "label": "Carro da Frota C",
+                        "label": "Frota C",
                         "positionId": 16145842,
                         "date": "2018-09-26 22:15:27",
                         "systemDate": "2018-09-26 11:20:01",
@@ -781,11 +715,11 @@
                     {
                         "vehicleId": 1,
                         "plate": "AAA1234",
-                        "label": "Carro da Frota A",
+                        "label": "Frota A",
                         "positionId": 16145844,
                         "date": "2018-01-05 14:25:27",
                         "systemDate": "2018-09-26 14:35:15",
-                        "ignition": "OFF",
+                        "ignition": "ON",
                         "speed": "0",
                         "output1": "OFF",
                         "output2": "OFF",
@@ -808,16 +742,16 @@
                     {
                         "vehicleId": 2,
                         "plate": "BBB1234",
-                        "label": "Carro da Frota A",
+                        "label": "Frota A",
                         "positionId": 16145844,
                         "date": "2018-09-26 11:19:27",
                         "systemDate": "2018-10-15 11:20:01",
-                        "ignition": "OFF",
+                        "ignition": "ON",
                         "speed": "0",
                         "output1": "OFF",
                         "output2": "OFF",
-                        "latitude": "-22.831837",
-                        "longitude": "-47.023258",
+                        "latitude": "-22.849737",
+                        "longitude": "-47.083896",
                         "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
                         "deviceId": 654321,
                         "mainBattery": "18.50",
@@ -835,7 +769,7 @@
                     {
                         "vehicleId": 3,
                         "plate": "DDD1234",
-                        "label": "Carro da Frota B",
+                        "label": "Frota B",
                         "positionId": 16145843,
                         "date": "2018-09-29 08:30:27",
                         "systemDate": "2018-09-26 11:20:01",
@@ -843,8 +777,8 @@
                         "speed": "0",
                         "output1": "OFF",
                         "output2": "OFF",
-                        "latitude": "-22.546837",
-                        "longitude": "-47.983258",
+                        "latitude": "-22.849937",
+                        "longitude": "-47.089876",
                         "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
                         "deviceId": 456789,
                         "mainBattery": "53.90",
@@ -861,17 +795,17 @@
                     },
                     {
                         "vehicleId": 4,
-                        "plate": "FFF1234",
-                        "label": "Carro da Frota C",
+                        "plate": "FFF0001",
+                        "label": "Frota C",
                         "positionId": 16145842,
                         "date": "2018-09-26 22:15:27",
                         "systemDate": "2018-09-26 11:20:01",
-                        "ignition": "OFF",
+                        "ignition": "ON",
                         "speed": "0",
                         "output1": "OFF",
                         "output2": "OFF",
-                        "latitude": "-22.846237",
-                        "longitude": "-47.089258",
+                        "latitude": "-22.845237",
+                        "longitude": "-47.088258",
                         "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
                         "deviceId": 987654,
                         "mainBattery": "00.00",
@@ -888,8 +822,8 @@
                     },
                     {
                         "vehicleId": 5,
-                        "plate": "FFF1234",
-                        "label": "Carro da Frota C",
+                        "plate": "FFF0041",
+                        "label": "Frota C",
                         "positionId": 16145842,
                         "date": "2018-09-26 22:15:27",
                         "systemDate": "2018-09-26 11:20:01",
@@ -897,304 +831,7 @@
                         "speed": "0",
                         "output1": "OFF",
                         "output2": "OFF",
-                        "latitude": "-22.846237",
-                        "longitude": "-47.089258",
-                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
-                        "deviceId": 987654,
-                        "mainBattery": "00.00",
-                        "backupBattery": "80.50",
-                        "driverId": "1F00CA1221AA31",
-                        "vehicleType": 5,
-                        "odometer": "6189843",
-                        "horimeter": "045316",
-                        "rpm": "1000",
-                        "temp1": "30",
-                        "temp2": "22",
-                        "temp3": "14",
-                        "direction": "000.00"
-                    },
-                    {
-                        "vehicleId": 6,
-                        "plate": "FFF1234",
-                        "label": "Carro da Frota C",
-                        "positionId": 16145842,
-                        "date": "2018-09-26 22:15:27",
-                        "systemDate": "2018-09-26 11:20:01",
-                        "ignition": "OFF",
-                        "speed": "0",
-                        "output1": "OFF",
-                        "output2": "OFF",
-                        "latitude": "-22.846237",
-                        "longitude": "-47.089258",
-                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
-                        "deviceId": 987654,
-                        "mainBattery": "00.00",
-                        "backupBattery": "80.50",
-                        "driverId": "1F00CA1221AA31",
-                        "vehicleType": 5,
-                        "odometer": "6189843",
-                        "horimeter": "045316",
-                        "rpm": "1000",
-                        "temp1": "30",
-                        "temp2": "22",
-                        "temp3": "14",
-                        "direction": "000.00"
-                    },
-                    {
-                        "vehicleId": 7,
-                        "plate": "FFF1234",
-                        "label": "Carro da Frota C",
-                        "positionId": 16145842,
-                        "date": "2018-09-26 22:15:27",
-                        "systemDate": "2018-09-26 11:20:01",
-                        "ignition": "OFF",
-                        "speed": "0",
-                        "output1": "OFF",
-                        "output2": "OFF",
-                        "latitude": "-22.846237",
-                        "longitude": "-47.089258",
-                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
-                        "deviceId": 987654,
-                        "mainBattery": "00.00",
-                        "backupBattery": "80.50",
-                        "driverId": "1F00CA1221AA31",
-                        "vehicleType": 5,
-                        "odometer": "6189843",
-                        "horimeter": "045316",
-                        "rpm": "1000",
-                        "temp1": "30",
-                        "temp2": "22",
-                        "temp3": "14",
-                        "direction": "000.00"
-                    },
-                    {
-                        "vehicleId": 8,
-                        "plate": "FFF1234",
-                        "label": "Carro da Frota C",
-                        "positionId": 16145842,
-                        "date": "2018-09-26 22:15:27",
-                        "systemDate": "2018-09-26 11:20:01",
-                        "ignition": "OFF",
-                        "speed": "0",
-                        "output1": "OFF",
-                        "output2": "OFF",
-                        "latitude": "-22.846237",
-                        "longitude": "-47.089258",
-                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
-                        "deviceId": 987654,
-                        "mainBattery": "00.00",
-                        "backupBattery": "80.50",
-                        "driverId": "1F00CA1221AA31",
-                        "vehicleType": 5,
-                        "odometer": "6189843",
-                        "horimeter": "045316",
-                        "rpm": "1000",
-                        "temp1": "30",
-                        "temp2": "22",
-                        "temp3": "14",
-                        "direction": "000.00"
-                    },
-                    {
-                        "vehicleId": 9,
-                        "plate": "FFF1234",
-                        "label": "Carro da Frota C",
-                        "positionId": 16145842,
-                        "date": "2018-09-26 22:15:27",
-                        "systemDate": "2018-09-26 11:20:01",
-                        "ignition": "OFF",
-                        "speed": "0",
-                        "output1": "OFF",
-                        "output2": "OFF",
-                        "latitude": "-22.846237",
-                        "longitude": "-47.089258",
-                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
-                        "deviceId": 987654,
-                        "mainBattery": "00.00",
-                        "backupBattery": "80.50",
-                        "driverId": "1F00CA1221AA31",
-                        "vehicleType": 5,
-                        "odometer": "6189843",
-                        "horimeter": "045316",
-                        "rpm": "1000",
-                        "temp1": "30",
-                        "temp2": "22",
-                        "temp3": "14",
-                        "direction": "000.00"
-                    },
-                    {
-                        "vehicleId": 10,
-                        "plate": "FFF1234",
-                        "label": "Carro da Frota C",
-                        "positionId": 16145842,
-                        "date": "2018-09-26 22:15:27",
-                        "systemDate": "2018-09-26 11:20:01",
-                        "ignition": "OFF",
-                        "speed": "0",
-                        "output1": "OFF",
-                        "output2": "OFF",
-                        "latitude": "-22.846237",
-                        "longitude": "-47.089258",
-                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
-                        "deviceId": 987654,
-                        "mainBattery": "00.00",
-                        "backupBattery": "80.50",
-                        "driverId": "1F00CA1221AA31",
-                        "vehicleType": 5,
-                        "odometer": "6189843",
-                        "horimeter": "045316",
-                        "rpm": "1000",
-                        "temp1": "30",
-                        "temp2": "22",
-                        "temp3": "14",
-                        "direction": "000.00"
-                    },
-                    {
-                        "vehicleId": 11,
-                        "plate": "FFF1234",
-                        "label": "Carro da Frota C",
-                        "positionId": 16145842,
-                        "date": "2018-09-26 22:15:27",
-                        "systemDate": "2018-09-26 11:20:01",
-                        "ignition": "OFF",
-                        "speed": "0",
-                        "output1": "OFF",
-                        "output2": "OFF",
-                        "latitude": "-22.846237",
-                        "longitude": "-47.089258",
-                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
-                        "deviceId": 987654,
-                        "mainBattery": "00.00",
-                        "backupBattery": "80.50",
-                        "driverId": "1F00CA1221AA31",
-                        "vehicleType": 5,
-                        "odometer": "6189843",
-                        "horimeter": "045316",
-                        "rpm": "1000",
-                        "temp1": "30",
-                        "temp2": "22",
-                        "temp3": "14",
-                        "direction": "000.00"
-                    },
-                    {
-                        "vehicleId": 12,
-                        "plate": "FFF1234",
-                        "label": "Carro da Frota C",
-                        "positionId": 16145842,
-                        "date": "2018-09-26 22:15:27",
-                        "systemDate": "2018-09-26 11:20:01",
-                        "ignition": "OFF",
-                        "speed": "0",
-                        "output1": "OFF",
-                        "output2": "OFF",
-                        "latitude": "-22.846237",
-                        "longitude": "-47.089258",
-                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
-                        "deviceId": 987654,
-                        "mainBattery": "00.00",
-                        "backupBattery": "80.50",
-                        "driverId": "1F00CA1221AA31",
-                        "vehicleType": 5,
-                        "odometer": "6189843",
-                        "horimeter": "045316",
-                        "rpm": "1000",
-                        "temp1": "30",
-                        "temp2": "22",
-                        "temp3": "14",
-                        "direction": "000.00"
-                    },
-                    {
-                        "vehicleId": 13,
-                        "plate": "FFF1234",
-                        "label": "Carro da Frota C",
-                        "positionId": 16145842,
-                        "date": "2018-09-26 22:15:27",
-                        "systemDate": "2018-09-26 11:20:01",
-                        "ignition": "OFF",
-                        "speed": "0",
-                        "output1": "OFF",
-                        "output2": "OFF",
-                        "latitude": "-22.846237",
-                        "longitude": "-47.089258",
-                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
-                        "deviceId": 987654,
-                        "mainBattery": "00.00",
-                        "backupBattery": "80.50",
-                        "driverId": "1F00CA1221AA31",
-                        "vehicleType": 5,
-                        "odometer": "6189843",
-                        "horimeter": "045316",
-                        "rpm": "1000",
-                        "temp1": "30",
-                        "temp2": "22",
-                        "temp3": "14",
-                        "direction": "000.00"
-                    },
-                    {
-                        "vehicleId": 14,
-                        "plate": "FFF1234",
-                        "label": "Carro da Frota C",
-                        "positionId": 16145842,
-                        "date": "2018-09-26 22:15:27",
-                        "systemDate": "2018-09-26 11:20:01",
-                        "ignition": "OFF",
-                        "speed": "0",
-                        "output1": "OFF",
-                        "output2": "OFF",
-                        "latitude": "-22.846237",
-                        "longitude": "-47.089258",
-                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
-                        "deviceId": 987654,
-                        "mainBattery": "00.00",
-                        "backupBattery": "80.50",
-                        "driverId": "1F00CA1221AA31",
-                        "vehicleType": 5,
-                        "odometer": "6189843",
-                        "horimeter": "045316",
-                        "rpm": "1000",
-                        "temp1": "30",
-                        "temp2": "22",
-                        "temp3": "14",
-                        "direction": "000.00"
-                    },
-                    {
-                        "vehicleId": 15,
-                        "plate": "FFF1234",
-                        "label": "Carro da Frota C",
-                        "positionId": 16145842,
-                        "date": "2018-09-26 22:15:27",
-                        "systemDate": "2018-09-26 11:20:01",
-                        "ignition": "OFF",
-                        "speed": "0",
-                        "output1": "OFF",
-                        "output2": "OFF",
-                        "latitude": "-22.846237",
-                        "longitude": "-47.089258",
-                        "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
-                        "deviceId": 987654,
-                        "mainBattery": "00.00",
-                        "backupBattery": "80.50",
-                        "driverId": "1F00CA1221AA31",
-                        "vehicleType": 5,
-                        "odometer": "6189843",
-                        "horimeter": "045316",
-                        "rpm": "1000",
-                        "temp1": "30",
-                        "temp2": "22",
-                        "temp3": "14",
-                        "direction": "000.00"
-                    },
-                    {
-                        "vehicleId": 16,
-                        "plate": "FFF1234",
-                        "label": "Carro da Frota C",
-                        "positionId": 16145842,
-                        "date": "2018-09-26 22:15:27",
-                        "systemDate": "2018-09-26 11:20:01",
-                        "ignition": "OFF",
-                        "speed": "0",
-                        "output1": "OFF",
-                        "output2": "OFF",
-                        "latitude": "-22.846237",
+                        "latitude": "-22.845837",
                         "longitude": "-47.089258",
                         "address": "ALAMEDA PRAÇA CAPITAL - LOT. CENTER SANTA GENEBRA, CAMPINAS - SP, 13080-650",
                         "deviceId": 987654,
@@ -1548,18 +1185,18 @@
                             labels: ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00","17:00","18:00","19:00","20:00","21:00"],
                             datasets: [
                                 {
-                                    label: "DDD-1234",
+                                    label: "Tempo Trabalhado",
                                     backgroundColor: 'rgba(248, 172, 89, 0.5)',
                                     pointBorderColor: "#F8AC59",
-                                    data: [15, 60, 40, 21, 56, 55, 40, 60, 12 , 0 , 0 , 0]
+                                    data: [15, 60, 60, 20, 56, 60, 40, 60, 12 , 15 , 0 , 0]
                                 },
                                 {
-                                    label: "FFF-1234",
+                                    label: "Tempo Parado",
                                     backgroundColor: 'rgba(35, 198, 200, 0.5)',
                                     borderColor: "rgba(26,179,148,0.7)",
                                     pointBackgroundColor: "rgba(26,179,148,1)",
                                     pointBorderColor: "#23C6C8",
-                                    data: [25, 0, 0, 0, 60, 60, 60, 60, 30 , 0 , 0 , 0]
+                                    data: [45, 0, 0, 40, 04, 0, 20, 0, 48 , 45 , 60 , 60]
                                 }   
                             ]
                         };
@@ -1571,18 +1208,18 @@
                             labels: ["01", "02", "03", "04", "05", "06", "07"],
                             datasets: [
                                 {
-                                    label: "DDD-1234",
+                                    label: "Tempo Trabalhado",
                                     backgroundColor: 'rgba(248, 172, 89, 0.5)',
                                     pointBorderColor: "#F8AC59",
-                                    data: [150, 600, 400, 210, 560, 550, 400]
+                                    data: [(150/60).toFixed(0), (600/60).toFixed(0), (400/60).toFixed(0), (210/60).toFixed(0), (560/60).toFixed(0), (550/60).toFixed(0), (400/60).toFixed(0)]
                                 },
                                 {
-                                    label: "FFF-1234",
+                                    label: "Tempo Parado",
                                     backgroundColor: 'rgba(35, 198, 200, 0.5)',
                                     borderColor: "rgba(26,179,148,0.7)",
                                     pointBackgroundColor: "rgba(26,179,148,1)",
                                     pointBorderColor: "#23C6C8",
-                                    data: [250, 90, 150, 420, 600, 275, 337]
+                                    data: [(250/60).toFixed(0), (90/60).toFixed(0), (150/60).toFixed(0), (420/60).toFixed(0), (600/60).toFixed(0), (275/60).toFixed(0), (337/60).toFixed(0)]
                                 }
                             ]
                         };
@@ -1594,18 +1231,18 @@
                             labels: ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho"],
                             datasets: [
                                 {
-                                    label: "DDD-1234",
+                                    label: "Tempo Trabalhado",
                                     backgroundColor: 'rgba(248, 172, 89, 0.5)',
                                     pointBorderColor: "#F8AC59",
-                                    data: [65000, 590000, 800000, 810000, 560000, 550000, 400000]
+                                    data: [(65000/60/60).toFixed(0), (590000/60/60).toFixed(0), (800000/60/60).toFixed(0), (810000/60/60).toFixed(0), (560000/60/60).toFixed(0), (550000/60/60).toFixed(0), (400000/60/60).toFixed(0)]
                                 },
                                 {
-                                    label: "FFF-1234",
+                                    label: "Tempo Parado",
                                     backgroundColor: 'rgba(35, 198, 200, 0.5)',
                                     borderColor: "rgba(26,179,148,0.7)",
                                     pointBackgroundColor: "rgba(26,179,148,1)",
                                     pointBorderColor: "#23C6C8",
-                                    data: [280000, 480000, 400000, 190000, 860000, 270000, 900000]
+                                    data: [(280000/60/60).toFixed(0), (480000/60/60).toFixed(0), (400000/60/60).toFixed(0), (190000/60/60).toFixed(0), (860000/60/60).toFixed(0), (270000/60/60).toFixed(0), (900000/60/60).toFixed(0)]
                                 }
                             ]
                         };
@@ -1661,7 +1298,7 @@
                 };
                 var barData = [
                     {
-                        label: "DDD-1234",
+                        label: "Tempo Trabalhado",
                         data: [
                             [10, 10],
                             [11, 10],
@@ -1679,7 +1316,7 @@
                         color: "#F8AC59"
                     },
                     {
-                        label: "FFF-1234",
+                        label: "Tempo parado",
                         data: [
                             [10, 5],
                             [11, 5],
@@ -1701,7 +1338,7 @@
             });
 
             //GoogleMaps Search position
-            function searchPos(plate){
+           /*  function searchPos(plate){
                 vehicleLastPos.data.forEach(element => {
                     if(element.plate == plate){
                         $('#deviceId').html(element.plate +' | '+element.deviceId+' <i class="fa fa-mobile text-navy"></i>')
@@ -1715,7 +1352,7 @@
                     }
                 });
             }
-            searchPos('AAA1234');
+            searchPos('AAA1234'); */
 
         </script>
     </body>

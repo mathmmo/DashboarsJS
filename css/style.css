@@ -9,9 +9,15 @@
  *
 */
 #map {
-    height: 480px;
+    height: 520px;
     margin-bottom: 16px;
-} 
+}
+
+.pesquisar-cliente{
+    width: 100%;
+    height: 34px !important;
+    line-height: 180% !important;
+}
 
 .graph2 {
     display: none !important;
